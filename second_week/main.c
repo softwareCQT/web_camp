@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
     while (1) 
     {
    	 int isNumber = 1;
-   	 int choice;
+   	 int choice = 0;
 	 windows();
 	 scanf("%d", &choice);
 	 
