@@ -20,31 +20,47 @@ public class addservelet extends HttpServlet {
 	   String name = request.getParameter("name");
 	   int priority = 1;  //注册权限不由改变，只能是普通管理员;
 	   String pwd = request.getParameter("upwd");
-	   UserDaoImpl method = new UserDaoImpl();
-	   Boolean flag = false;	 
-	   try {
-		if(method.userIDIsExist(ID))
-					flag = false; 
-		   else  
-			  flag = method.addUser(new User(ID, pwd, priority, name));
-	} catch (Exception e) {
-		// TODO 自动生成的 catch 块
-		e.printStackTrace();
-	}
-	  
-	   response.setCharacterEncoding("utf-8");
-	   if(flag == true)
+	   boolean flag = false;
+	   if(!ID.matches("[1-9][0-9]{8,12}"))    //对密码、ID、姓名简单验证
+	   {  
+		  request.setAttribute("Ierror","IDError");
+	      flag = true;
+	   }
+	   if(!name.matches("[\u4e00-\u9fa5]{2,5}" ))
+	   {  
+		  request.setAttribute("Nerror","NAMEError");
+	      flag = true;
+	   }
+	   if(!pwd.matches("^[a-zA-Z]{1,}\\d{8,}$"))
 	   { 
-		    request.setAttribute("error","addError");
-		    request.getRequestDispatcher("login.jsp").forward(request, response);;
+		   request.setAttribute("Perror","PWDError");
+		   flag = true;
 	   }
-	   else 
-	   {
-		   response.sendRedirect("register.jsp");
-	   }
-	}
+	   if(flag == true)  //为真则转发回去
+		 request.getRequestDispatcher("register.jsp").forward(request, response);
+	   else     //为假就是验证成功
+	   {   
+		   UserDaoImpl method = new UserDaoImpl();
+		   Boolean flag1 = false;	 
+		   try {
+			if(method.userIDIsExist(ID))
+				flag1 = false; 
+			else  
+				flag1 = method.addUser(new User(ID, pwd, priority, name));
+		} catch (Exception e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+		   response.setCharacterEncoding("utf-8");
+		   if(flag1 == true)
+			    request.setAttribute("error","addError");
+		   else
+			    request.setAttribute("error","Error");
+		   request.getRequestDispatcher("login.jsp").forward(request, response);
+		}
+	  }
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			doGet(request, response);
-	}
+				doGet(request, response);
+		}
 
 }

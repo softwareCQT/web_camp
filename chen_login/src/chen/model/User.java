@@ -23,6 +23,12 @@ public class User {
 		ID = iD;
 		PWD = pWD;
 	}
+  public User(String iD, String pWD,String name)
+  {
+	  ID = iD;
+	  this.name = name;
+	  PWD = pWD;
+  }
   public User() {}
   
   public String getID() {

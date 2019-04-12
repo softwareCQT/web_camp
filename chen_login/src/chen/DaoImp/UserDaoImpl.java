@@ -42,8 +42,8 @@ public class UserDaoImpl implements UserDao {
 			return false;			
 }
 		
-	@Override//修改密码
-	public boolean update(User user) throws Exception {
+	@Override//修改姓名和密码
+	public boolean updateUser(User user) throws Exception {
 		PreparedStatement pstmt = null;
         Connection con = dbUtil.getCon();
 		int result = 0;
@@ -121,15 +121,15 @@ public class UserDaoImpl implements UserDao {
 		PreparedStatement pstmt = null;
 		Connection con = dbUtil.getCon();
 		ResultSet rs = null;
-		int result = 1;
+		int result = 0;
 		try {
-			String sql = "select priority from login where userID=?";
+			String sql = "select * from login where userID=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, ID);
 			rs = pstmt.executeQuery();
 			if(rs.next())
 			{
-			   result = rs.getInt(1);
+			   result = rs.getInt("priority");
 			}
 		}catch (SQLException e) {
 			e.printStackTrace();
@@ -138,8 +138,9 @@ public class UserDaoImpl implements UserDao {
 		}
 	return result;
 }
+	@Override 
     public List<User> QueryAll() {
-		Connection con = null;
+    	Connection con = dbUtil.getCon();
 		PreparedStatement pstmt = null;
 		User user = null;
 		List<User> users = new ArrayList<>();
@@ -166,15 +167,17 @@ public class UserDaoImpl implements UserDao {
 			dbUtil.close(pstmt, con);
 				}
 		}
+	@Override 
     public User Query(String ID)
     {
-    	Connection con = null;
+    	Connection con = dbUtil.getCon();
 		PreparedStatement pstmt = null;
 		User user = null;
 		ResultSet rs = null ;
 		try {
-			  String sql = "select * from login";
+			  String sql = "select * from login where  userID = ?";
 			  pstmt = con.prepareStatement(sql);
+			  pstmt.setString(1, ID);
 			  rs = pstmt.executeQuery();
 			  if(rs.next()) {
 				  String ID1 = rs.getString("userID");
@@ -195,5 +198,32 @@ public class UserDaoImpl implements UserDao {
 			dbUtil.close(pstmt, con);
 				}
 		}
-    }
-}
+	@Override 
+	public Boolean Beupdate(int priority,String ID) //修改权限
+	{
+		Connection con = dbUtil.getCon();
+		PreparedStatement pstmt = null;
+		User user = null;
+		int result = 0 ;
+		try {
+			  String sql = "update login set priority=? where userID=?";
+			  pstmt = con.prepareStatement(sql);
+			  pstmt.setInt(1, priority);
+			  pstmt.setString(2, ID);
+			  result = pstmt.executeUpdate();
+			  if(result == 1) {
+				  return true;
+			  }
+			  return false ;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null ; 
+		}catch (Exception e) {
+			e.printStackTrace();
+			return null ; 
+		}
+		finally {
+			dbUtil.close(pstmt, con);
+				}
+	}
+ }

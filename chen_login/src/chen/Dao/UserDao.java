@@ -9,7 +9,7 @@ public interface UserDao {
 		public  Boolean login(User user);
 
 		// 修改密码
-		public  boolean update(User user) throws Exception;
+		public  boolean updateUser(User user) throws Exception;
 
 		// 添加用户
 		public  boolean addUser(User user) throws Exception;
@@ -21,5 +21,8 @@ public interface UserDao {
 		public User Query(String ID);
 		
 		//判断用户的权限  1代表普通用户，2代表管理员，3代表超级管理员
-		public int userPriority(String name); 
+		public int userPriority(String name);
+		
+		public Boolean Beupdate(int priority, String ID);
+		
 } 
