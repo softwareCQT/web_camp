@@ -1,0 +1,65 @@
+body {
+	width: 100%;
+	height: 100%;
+	font-family: 'Open Sans', sans-serif;
+	margin: 0;
+	background-image: url("login.jpg");
+}
+
+#reg {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 400px;
+	height: 300px;
+	margin-left: -200px;
+	margin-top: -150px;
+	background-color: rgba(240, 255, 255, 0.5);
+	border-radius: 15px;
+	text-align: center;
+}
+
+#reg h1 {
+	color: #fff;
+	font-size: 48px;
+	font-family: STXinwei;
+	letter-spacing: 5px;
+	text-align: center;
+	display: block;
+	margin: 20px;
+}
+
+input {
+	width: 180px;
+	height: 15px;
+	border: none;
+	outline: none;
+	padding: 10px;
+	font-size: 15px;
+	color: #fff;
+	border-radius: 5px;
+	background-color: rgba(240, 255, 255, 0.5);
+	text-align: left;
+}
+
+span {
+	color: #fff;
+	font-size: 25px;
+	font-family: STXinwei;
+}
+
+.button {
+	width: 300px;
+	min-height: 15px;
+	display: block;
+	background-color: #26729a;
+	border: none;
+	color: #fff;
+	padding: 9px 14px;
+	font-size: 15px;
+	line-height: normal;
+	border-radius: 5px;
+	margin: auto;
+	font-size: 25px;
+	font-family: STXinwei;
+}
